@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 const AddInvoice = () => {
- 
+  // const navigate = useNavigate();
+
   const [inputData, setInputData] = useState({
     stadd: "",
     city1: "",
@@ -21,12 +23,11 @@ const AddInvoice = () => {
     itemName: "",
     qty: "",
     price: "",
-    total:"",
+    total: "",
   });
   const [error, setError] = useState({});
   const [isValidate, setIsValidate] = useState(false);
   const [loading, setloading] = useState(false);
-  
 
   const validation = (value) => {
     let newErr = {};
@@ -100,6 +101,18 @@ const AddInvoice = () => {
     });
   };
 
+  // const postData = async () => {
+  //   setloading(true);
+  //   try {
+  //     const res = await axios.post("http://localhost:3000/invoice", inputData);
+  //     console.log(res);
+  //     navigate("/path-after-success");
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   setloading(false);
+  // };
+
   const postData = async () => {
     setloading(true);
     await axios
@@ -123,9 +136,8 @@ const AddInvoice = () => {
           itemName: "",
           qty: "",
           price: "",
-          total:"",
+          total: "",
         });
-    
       })
       .catch((err) => console.log(err));
     setloading(false);
@@ -140,7 +152,7 @@ const AddInvoice = () => {
   return (
     <form
       onSubmit={handelSubmit}
-      className="h-screen overflow-y-auto scroll-smooth scrollbar-thin scrollbar-track-slate-500 scrollbar-thumb-[#1F213A]"
+      className="h-screen overflow-y-auto scrollbar-hide w-auto"
     >
       <div className="flex flex-col  px-[30px]  ">
         <h1 className="pt-[15px] font-bold text-2xl">New Invoice</h1>
@@ -370,18 +382,19 @@ const AddInvoice = () => {
           />
         </div>
       </div>
-      <div    className=" py-4 px-3 flex flex-row justify-between">
+      <div className=" py-4 px-3 flex flex-row justify-between">
         <div className="cursor-pointer border-[1px] border-[#7C5DFA]  bg-white p-[10px] rounded-[28px] flex flex-row gap-3 items-center hover:animate-pulse">
           <p className="text-[#7E88C3]"> Discard</p>
         </div>
 
-        <button
-      
-          type="submit"
-          className="cursor-pointer border-[1px] border-[#7C5DFA] bg-[#7C5DFA] p-[10px] rounded-[28px] flex flex-row gap-3 items-center hover:animate-pulse"
-        >
-          <p>Save and Send</p>
-        </button>
+        <Link to="/invoicelist">
+          <button
+            type="submit"
+            className="cursor-pointer border-[1px] border-[#7C5DFA] bg-[#7C5DFA] p-[10px] rounded-[28px] flex flex-row gap-3 items-center hover:animate-pulse"
+          >
+            <p>Save and Send</p>
+          </button>
+        </Link>
       </div>
     </form>
   );

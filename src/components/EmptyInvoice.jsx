@@ -4,7 +4,7 @@ import MessageImg from "../assets/images/message.png";
 import AvatarImg from "../assets/images/avatar.png";
 import NewInvoice from "./AddInvoice";
 
-const InvoiceList = () => {
+const EmptyInvoice = () => {
   const [isShow, setIsShow] = useState(false);
 
   const toggleSidebar = () => {
@@ -94,4 +94,4 @@ const InvoiceList = () => {
   );
 };
 
-export default InvoiceList;
+export default EmptyInvoice;
