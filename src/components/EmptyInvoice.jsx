@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IconArrowDown, IconPlus, IconSun, Logo } from "../assets/icons/icons";
 import MessageImg from "../assets/images/message.png";
 import AvatarImg from "../assets/images/avatar.png";
-import NewInvoice from "./AddInvoice";
+import AddInvoice from "./AddInvoice";
 
 const EmptyInvoice = () => {
   const [isShow, setIsShow] = useState(false);
@@ -34,7 +34,7 @@ const EmptyInvoice = () => {
             </div>
           </div>
           <div className=" w-full  items-center text-white">
-            <NewInvoice />
+            <AddInvoice />
           </div>
         </div>
       </div>

@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react";
-
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-
-const AddInvoice = () => {
-  // const navigate = useNavigate();
-
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+const EditInvoice = () => {
   const [inputData, setInputData] = useState({
     stadd: "",
     city1: "",
@@ -27,15 +23,15 @@ const AddInvoice = () => {
   });
   const [error, setError] = useState({});
   const [isValidate, setIsValidate] = useState(false);
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const validation = (value) => {
     let newErr = {};
     if (!value.stadd) {
       newErr = { ...newErr, stadd: "Street address required!" };
     }
-    if (!value.city) {
-      newErr = { ...newErr, city: "City name required!" };
+    if (!value.city1) {
+      newErr = { ...newErr, city1: "City name required!" };
     }
     if (!value.postCode1) {
       newErr = { ...newErr, postCode1: "PostCode required!" };
@@ -101,47 +97,36 @@ const AddInvoice = () => {
     });
   };
 
-  // const postData = async () => {
-  //   setloading(true);
-  //   try {
-  //     const res = await axios.post("http://localhost:3000/invoice", inputData);
-  //     console.log(res);
-  //     navigate("/path-after-success");
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  //   setloading(false);
-  // };
-
   const postData = async () => {
-    setloading(true);
+    setLoading(true);
     await axios
-      .post("http://localhost:3000/invoice", inputData)
+      .patch("http://localhost:3000/invoice", inputData)
       .then((res) => {
         console.log(res);
+        Navigate("/navigate");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setLoading(false);
+  };
+
+  const getInvoice = () => {
+    axios
+      .get("http://localhost:3000/invoice")
+      .then((res) => {
         setInputData({
-          stadd: "",
-          city1: "",
-          postCode1: "",
-          country1: "",
-          clientName: "",
-          email: "",
-          staddress: "",
-          city2: "",
-          postCode2: "",
-          country2: "",
-          date: "",
-          payment: "",
-          dec: "",
-          itemName: "",
-          qty: "",
-          price: "",
-          total: "",
+          ...res.data[0],
         });
       })
-      .catch((err) => console.log(err));
-    setloading(false);
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
+  useEffect(() => {
+    getInvoice();
+  });
 
   useEffect(() => {
     if (Object.keys(error).length === 0 && isValidate) {
@@ -152,7 +137,7 @@ const AddInvoice = () => {
   return (
     <form
       onSubmit={handelSubmit}
-      className="h-screen overflow-y-auto scrollbar-hide w-auto"
+      className="h-screen overflow-y-auto scrollbar-hide"
     >
       <div className="flex flex-col  px-[30px]  ">
         <h1 className="pt-[15px] font-bold text-2xl">New Invoice</h1>
@@ -176,7 +161,7 @@ const AddInvoice = () => {
               City
             </label>
             <input
-              value={inputData.city}
+              value={inputData.city1}
               onChange={handleChange}
               name="city"
               className="block w-full p-2 bg-[#1F213A] text-white border border-[#141625] rounded-lg  text-base   "
@@ -293,7 +278,7 @@ const AddInvoice = () => {
               <input
                 value={inputData.date}
                 onChange={handleChange}
-                name="date"
+                name="country"
                 type="date"
                 className="block w-full p-2 bg-[#1F213A] text-white border border-[#141625] rounded-lg  text-base   "
               />
@@ -386,13 +371,12 @@ const AddInvoice = () => {
         <div className="cursor-pointer border-[1px] border-[#7C5DFA]  bg-white p-[10px] rounded-[28px] flex flex-row gap-3 items-center hover:animate-pulse">
           <p className="text-[#7E88C3]"> Discard</p>
         </div>
-
         <Link to="/invoicelist">
           <button
             type="submit"
             className="cursor-pointer border-[1px] border-[#7C5DFA] bg-[#7C5DFA] p-[10px] rounded-[28px] flex flex-row gap-3 items-center hover:animate-pulse"
           >
-            <p>Save and Send</p>
+            {loading ? <p className="spinner"></p> : "Save and Send"}
           </button>
         </Link>
       </div>
@@ -400,4 +384,4 @@ const AddInvoice = () => {
   );
 };
 
-export default AddInvoice;
+export default EditInvoice;

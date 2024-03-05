@@ -29,8 +29,8 @@ const EditInvoice = () => {
     if (!value.stadd) {
       newErr = { ...newErr, stadd: "Street address required!" };
     }
-    if (!value.city) {
-      newErr = { ...newErr, city: "City name required!" };
+    if (!value.city1) {
+      newErr = { ...newErr, city1: "City name required!" };
     }
     if (!value.postCode1) {
       newErr = { ...newErr, postCode1: "PostCode required!" };
@@ -160,7 +160,7 @@ const EditInvoice = () => {
               City
             </label>
             <input
-              value={inputData.city}
+              value={inputData.city1}
               onChange={handleChange}
               name="city"
               className="block w-full p-2 bg-[#1F213A] text-white border border-[#141625] rounded-lg  text-base   "
